@@ -1,64 +1,64 @@
 #include "trie.h"
-#define SIZE_TO_ADD 30
 
+int main(int argc, char* argv[])
+{
+    node *root = getNode();                         // my root 
+    char *word = (char*)malloc(sizeof(char)*Line);  // the word
+    int index=0;                                    // index number to fill the word
+    int file = Line;                                // allocation file 256
+    boolean isReverse = false;                      // if is Reverse mode
+    char temp = getchar();                          // the char from the text
+    int multi=1;                                    // multiply the alloc
 
-int main(int argc, char* argv[]){
-
-   bool isReverse=false;
-   char* word = (char*)malloc(sizeof(char)*256);
-   int size=256;
-   char* temp=NULL;
-   int counter=0;
-   int check=0;
-   char c=getchar();
-   node* root = getNode();
-
-   //check if gonna to print the tree in reverse or straight.
-     if(argc==2 && strcmp(argv[1],"r")==0)
-     isReverse=true;
-
-     while(c!=EOF || (c==EOF && check!=1)){
-         if(c>=65 && c<=90){c=c+32;}
-
-         if(c>=97 && c<=122 && c!=' ' && c!= '\n' && c!='\0' && c!='\t'){
-             if(counter==size){
-                 temp=(char*)realloc(word,(size+SIZE_TO_ADD)*sizeof(char));
-                 size+=SIZE_TO_ADD;
-                 if(temp==NULL&& word!=NULL){
-                     free(word);
-                     return -1;
-             } 
-                word=(char*)calloc(size,sizeof(char));
-                strcpy(word,temp);
-                free(temp);
-             }
-        
-             word[counter]=c;
-             counter++;
-            
-             
-         }
-         if((c==' ' || c=='\n' || c=='\t' || c=='\0') || c==EOF){
-             word[counter]='\0';
-             if(word[0]!=' ' && counter>=1){
-             insert(&root,word);
-             }
-             counter=0;
-         }
-        if(c==EOF) check=1;
-       c=getchar();
-     }
-
+    // check if Print Reverse, or Print regular
+    // if is "frequency", or "frequency r"
+    if(argc==2 && *argv[1] == 'r' )
+    {
+        isReverse=true;
+    }
     
-   if(isReverse) {
-       printR(&root,word,0);
-   }
-   else {
-       print(&root,word,0);
-   }
-    freeTrie(&root);
-    free(word);
-   
+    // while i have a text file to read..
+    while(temp!=EOF) 
+    {
+        // check if is a proper input
+        if(temp>='a' && temp<='z'){ 
+            if(temp !=' ' && temp !='\t' && temp !='\n' && temp !='\0'){
+                if(index!=file){
+                    word[index]=temp;
+                    index++;
+                }else{
+                    ++multi;                            // realloc the size by *multi, ++multi.
+                    word =(char*)realloc(word,(Line*multi)*(sizeof(char)));
+                }
+                // end of word 
+                if(temp == EOF ||temp ==' ' || temp == '\t' || temp == '\n' || temp == '\0'){
+                word[index] = '\0';
+                    if( word[0] == ' '){
+                        index=0;
+                    }else{
+                        if(index>=1){
+                            insert(&root,word);
+                        }
+                    }
+                }
+                if(temp == EOF){
+                    return -1;
+                }
+            }
+        }
+    }
 
-return 0;
+    // the last check- if is Reverse or not, and print.
+    if(isReverse)
+    {
+        printReverse(&root,word,0);
+    } else{
+        printWord(&root,word,0);
+    }
+
+    // free allocation 
+    DeleteTrie(&root);
+    free(word);
+
+    return 0;
 }
