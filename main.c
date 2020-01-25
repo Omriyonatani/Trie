@@ -47,9 +47,10 @@ int main(int argc, char* argv[])
         // end of word 
         if(temp == EOF ||temp ==' ' || temp == '\t' || temp == '\n' || temp == '\0' || temp == '.' || temp == ','){
             word[index] = '\0';
-            if(index>=1){
+            if(word[0]!=' ' && index>=1){
                 insert(&root,word);
             }
+            index=0;
         }
     }
 
