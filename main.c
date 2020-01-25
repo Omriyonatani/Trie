@@ -45,12 +45,9 @@ int main(int argc, char* argv[])
                 if(temp == EOF){
                     return -1;
                 }
+            }
+        }
     }
-
-    if(temp == EOF){
-        return -1;
-    }
-
     // the last check- if is Reverse or not, and print.
     if(isReverse)
     {
