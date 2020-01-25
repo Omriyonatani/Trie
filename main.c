@@ -33,20 +33,18 @@ int main(int argc, char* argv[])
         // end of word 
         if(temp == EOF ||temp ==' ' || temp == '\t' || temp == '\n' || temp == '\0' || temp == '.' || temp == ','){
             word[index] = '\0';
-            if( word[0] == ' '){
+            if(word[0] == ' '){
                 index=0;
             }else{
                 if(index>=1){
                 insert(&root,word);
+                }else{
+                    ++multi;                            // realloc the size by *multi, ++multi.
+                    word =(char*)realloc(word,(Line*multi)*(sizeof(char)));
                 }
-            }
-        }else{
-            ++multi;                            // realloc the size by *multi, ++multi.
-            word =(char*)realloc(word,(Line*multi)*(sizeof(char)));
-        }
-        if(temp == EOF){
-            return -1;
-        }
+                if(temp == EOF){
+                    return -1;
+                }
     }
 
     if(temp == EOF){
