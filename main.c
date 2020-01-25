@@ -58,9 +58,8 @@ int main(int argc, char* argv[])
     if(isReverse)
     {
         printReverse(&root,word,0);
-    } else{
-        printWord(&root,word,0);
     }
+    printWord(&root,word,0);
 
     // free allocation 
     DeleteTrie(&root);
