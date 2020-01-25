@@ -77,7 +77,6 @@ void DeleteTrie(node **root)
 }
 
 
-
 // Recursive function to print the word with the count of times that appear
 void printWord(node **head, char word[], int height)
 {
