@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
 
     // check if Print Reverse, or Print regular
     // if is "frequency", or "frequency r"
-    if(argc==2 && *argv[1] == 'r' )
+    if(argc==2 && strcmp(argv[1],"r")==0)
     {
         isReverse=true;
     }
@@ -20,6 +20,16 @@ int main(int argc, char* argv[])
     // while i have a text file to read..
     while(temp!=EOF)
     {
+        // change to lowercase 
+        if(temp >= 'A' && temp <= 'Z'){
+            temp += 'a';
+        }
+
+        // need to make the array bigger
+        if(index==file){
+            word=(char*)realloc(word,(Line*multi)*sizeof(char));
+        }
+
         // check if is a proper input
         if(temp>='a' && temp<='z'){
             if(temp !=' ' && temp !='\t' && temp !='\n' && temp !='\0' && temp !='.' && temp!=','){
@@ -33,21 +43,12 @@ int main(int argc, char* argv[])
         // end of word 
         if(temp == EOF ||temp ==' ' || temp == '\t' || temp == '\n' || temp == '\0' || temp == '.' || temp == ','){
             word[index] = '\0';
-            if(word[0] == ' '){
-                index=0;
-            }else{
-                if(index>=1){
+            if(index>=1){
                 insert(&root,word);
-                }else{
-                    ++multi;                            // realloc the size by *multi, ++multi.
-                    word =(char*)realloc(word,(Line*multi)*(sizeof(char)));
-                }
-                if(temp == EOF){
-                    return -1;
-                }
             }
         }
     }
+
     // the last check- if is Reverse or not, and print.
     if(isReverse)
     {
