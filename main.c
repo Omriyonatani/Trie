@@ -33,6 +33,10 @@ int main(int argc, char* argv[])
         // check if is a proper input
         if(temp>='a' && temp<='z'){
             if(temp !=' ' && temp !='\t' && temp !='\n' && temp !='\0' && temp !='.' && temp!=','){
+                // check again if need to make the array bigger
+                if(index==file){
+                    word=(char*)realloc(word,(Line*multi)*sizeof(char));
+                }
                 if(index!=file){
                     word[index]=temp;
                     index++;
